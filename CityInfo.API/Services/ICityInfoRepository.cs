@@ -8,7 +8,9 @@ namespace CityInfo.API.Services
         Task<City?> GetCityAsync(int cityId, bool includePOIs);
         Task<IEnumerable<PointOfInterest>> GetPointsOfInterestAsync(int cityId);
         Task<PointOfInterest?> GetPointOfInterestAsync(int cityId, int POIId);
-
-
+        Task<bool> CityExistsAsync(int cityId);
+        Task AddPointOfInterestForCityAsync(int cityId, PointOfInterest pointOfInterest);
+        Task<bool> SaveChangesAsync();
+        void DeletePointOfInterest(PointOfInterest pointOfInterest);
     }
 }

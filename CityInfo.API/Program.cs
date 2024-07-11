@@ -51,6 +51,8 @@ builder.Services.AddDbContext<CityInfoContext>(dbContextOptions
 //hypothetically, could use environment variables to store prod connection string
 //don't want to implement that right now, as it isn't important for my learning purposes
 //also that really isn't secure anyway compared to something like Azure key vault...
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
