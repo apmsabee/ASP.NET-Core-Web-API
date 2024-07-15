@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace CityInfo.API.Controllers
 {
-    [Route("api/files")]
+    [Route("api/v{version:apiVersion}/files")]
     [ApiController]
     public class FilesController : ControllerBase
     {
@@ -17,6 +18,7 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpGet("{fileId}")]
+        [ApiVersion(0.1, Deprecated =true)]
         public ActionResult GetFile(string fileId)
         {
             var pathToFile = "G0034152.JPG";
