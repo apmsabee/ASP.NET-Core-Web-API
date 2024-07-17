@@ -39,14 +39,26 @@ namespace CityInfo.API.Controllers
 
             return Ok(_mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities));
         }
-
+        /// <summary>
+        /// Get a city by id
+        /// </summary>
+        /// <param name="id">The ID of the city to get</param>
+        /// <param name="includePOIs">Whether or not to include the list of the city's points of interest</param>
+        /// <returns>A city with or without POIs</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCity(int id, bool includePOIs = false)
         {
             var city = await _cityInfoRepository.GetCityAsync(id, includePOIs);
             if (city == null)
             {
                 return NotFound();
+            }
+            if (includePOIs)
+            {
+                return Ok(_mapper.Map<CityDto>(city));
             }
             return Ok(_mapper.Map<CityWithoutPointsOfInterestDto>(city));
         }
