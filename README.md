@@ -1,1 +1,2 @@
-# CityInfo
+# An implementation of the ASP.NET Core Web API from Kevin Dockx's course on Pluralsight.
+Done to familiarize myself with C# and .NET development for my current internship, this API is able to create, delete, modify, and retrieve resources from the SQLite database set up through the project. Learned about services and dependency injection, authentication & versioning for the API, testing via HTTP_REPL and .http files, Azure deployment and use of Key Vault and Application Insights, EF Core, input validation, and the general process surrounding creation of a .NET application.
