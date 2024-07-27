@@ -30,4 +30,4 @@ Content-Type: application/json
 
 ###
 GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFuZHkiLCJmYW1pbHlfbmFtZSI6IlNhYmVlIiwiY2l0eSI6Ik5ldyBZb3JrIiwibmJmIjoxNzIyMDQ0MTE4LCJleHAiOjE3MjIwNDc3MTgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcxMjciLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.tcISk4f478UTiKEIeGdtGyeQEpNnzymk1n-xAabn5Qs
+Authorization: Bearer 
