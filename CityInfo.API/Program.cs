@@ -9,17 +9,36 @@ using Asp.Versioning;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Asp.Versioning.ApiExplorer;
+using Microsoft.ApplicationInsights.Extensibility;
 
 Log.Logger = new LoggerConfiguration()
    .MinimumLevel.Debug()
    .WriteTo.Console()
-   .WriteTo.File("logs/cityinfo.txt", rollingInterval: RollingInterval.Day)
    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Logging.ClearProviders();
 //builder.Logging.AddConsole();
-builder.Host.UseSerilog();
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+if(env == Environments.Development)
+{
+    builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
+    .MinimumLevel.Debug()
+    .WriteTo.Console());
+}
+else
+{
+    builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/cityinfo.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.ApplicationInsights(
+    new TelemetryConfiguration()
+    {
+        InstrumentationKey = builder.Configuration["ApplicationInsightsInstrumentationKey"]
+    },
+   TelemetryConverter.Traces));
+}
 
 // Add services to the container.
 
@@ -139,6 +158,12 @@ builder.Services.AddSwaggerGen(setupAction =>
 
 });
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor
+    | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -147,20 +172,21 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler();
 }
 
-if (app.Environment.IsDevelopment())
+app.UseForwardedHeaders();
+
+
+app.UseSwagger();
+app.UseSwaggerUI(setupAction =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(setupAction =>
+    var descriptions = app.DescribeApiVersions();
+    foreach (var desc in descriptions)
     {
-        var descriptions = app.DescribeApiVersions();
-        foreach (var desc in descriptions)
-        {
-            setupAction.SwaggerEndpoint(
-                $"/swagger/{desc.GroupName}/swagger.json",
-                desc.GroupName.ToUpperInvariant());
-        }
-    });
-}
+        setupAction.SwaggerEndpoint(
+            $"/swagger/{desc.GroupName}/swagger.json",
+            desc.GroupName.ToUpperInvariant());
+    }
+});
+
 
 app.UseHttpsRedirection();
 
