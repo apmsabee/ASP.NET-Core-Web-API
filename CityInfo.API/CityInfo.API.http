@@ -1,6 +1,19 @@
-@CityInfo.API_HostAddress = http://localhost:5107
+@CityInfo.API_HostAddress = https://localhost:7127
 
 GET {{CityInfo.API_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+POST {{CityInfo.API_HostAddress}}/api/authentication/authenticate
+Content-Type: application/json
+
+{
+  //AuthenticationRequestBody
+}
+
+###
+
+GET {{CityInfo.API_HostAddress}}/api/v{version:apiVersion}/cities?name=string&searchQuery=string
 
 ###

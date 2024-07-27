@@ -1,0 +1,33 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@schema=https
+@hostname=localhost
+@port=7127
+
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Accept:application/xml
+
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
+Accept:application/json
+Content-Type:application/json
+
+{
+  "name": "The empire state building",
+  "description": "A beautiful work of architecture from the early 1900s"
+}
+
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/authentication/authenticate
+Content-Type: application/json
+
+{
+  "username": "KevinDockx",
+  "password": "This is a relatively long sentence that acts as my password"
+}
+
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFuZHkiLCJmYW1pbHlfbmFtZSI6IlNhYmVlIiwiY2l0eSI6Ik5ldyBZb3JrIiwibmJmIjoxNzIyMDQ0MTE4LCJleHAiOjE3MjIwNDc3MTgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcxMjciLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.tcISk4f478UTiKEIeGdtGyeQEpNnzymk1n-xAabn5Qs

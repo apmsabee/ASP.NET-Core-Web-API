@@ -42,16 +42,16 @@ namespace CityInfo.API.Controllers
         /// <summary>
         /// Get a city by id
         /// </summary>
-        /// <param name="id">The ID of the city to get</param>
+        /// <param name=cityId">The ID of the city to get</param>
         /// <param name="includePOIs">Whether or not to include the list of the city's points of interest</param>
         /// <returns>A city with or without POIs</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{cityId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetCity(int id, bool includePOIs = false)
+        public async Task<IActionResult> GetCity(int cityId, bool includePOIs = false)
         {
-            var city = await _cityInfoRepository.GetCityAsync(id, includePOIs);
+            var city = await _cityInfoRepository.GetCityAsync(cityId, includePOIs);
             if (city == null)
             {
                 return NotFound();
